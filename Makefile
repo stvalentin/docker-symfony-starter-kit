@@ -3,13 +3,12 @@ help: ## Shows this help message.
 	@echo
 	@echo 'targets:'
 	@egrep '^(.+)\:\ ##\ (.+)' ${MAKEFILE_LIST} | column -t -c 2 -s ':#'
-
 install: ## Installs all dependencies
 	docker-compose build
 .PHONY: install
 
 up: ## Starts all containers that must run in the background
-	docker-compose up
+	docker-compose up -d
 .PHONY: up
 
 generate: ## Generate a new empty project
@@ -17,12 +16,16 @@ generate: ## Generate a new empty project
 .PHONY: up
 
 generate-skeleton: ## Generate a new symfony skeleton project
-	docker-compose run --rm php-fpm composer create-project symfony/skeleton temp-generate-folder && cp -rp temp-generate-folder/. ./ rm && rm -r temp-generate-folder && git reset
-.PHONY: up
+	docker-compose run --rm php-fpm composer create-project symfony/skeleton temp-generate-folder && cp -rp temp-generate-folder/. ./ && rm -rf temp-generate-folder && git reset
+.PHONY: generate-skeleton
 
-generate-website-skeleton: ## Generate a new symfony website skeleton project
-	docker-compose run --rm php-fpm composer create-project symfony/website-skeleton temp-generate-folder && cp -rp temp-generate-folder/. ./ rm && rm -r temp-generate-folder && git reset
-.PHONY: up
+generate-website: ## Generate a new symfony website skeleton project
+	docker-compose run --rm php-fpm composer create-project symfony/website-skeleton temp-generate-folder && cp -rp temp-generate-folder/. ./ && rm -rf temp-generate-folder && git reset
+.PHONY: generate-website-skeleton
+
+package:
+	docker-compose run --rm php-fpm composer require
+.PHONY: package
 
 down: ## Shut down container
 	docker-compose down

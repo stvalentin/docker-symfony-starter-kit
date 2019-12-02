@@ -21,5 +21,17 @@ services:
       - .:/app
       - phpsocket:/var/run/php
       #- ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+
+  postgres:
+    image: postgres:12-alpine
+    container_name: app-postgres
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
 volumes:
   phpsocket:
