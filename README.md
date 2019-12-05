@@ -13,7 +13,7 @@ Application stack:
 ## Installation
 **Clone this repository**
 ```
-$ git clone --bare git@github.com:stvalentin/docker-symfony-starter-kit.git
+$ git clone git@github.com:stvalentin/docker-symfony-starter-kit.git
 ```
 
 **Generate the project that fits your needs** 
